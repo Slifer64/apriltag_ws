@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find apriltag_test)/urdf/scene.urdf.xacro' use_nominal_extrinsics:=true" />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+    <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+        <arg name="camera" value="camera" />
+
+        <arg name="enable_depth" value="false" />
+
+        <arg name="align_depth" value="false" />
+
+        <arg name="enable_sync" value="false" />
+
+        <arg name="publish_tf" value="true"/>
+
+        <arg name="enable_pointcloud" value="false" />
+
+        <!-- <arg name="color_width" value="-1"/>
+        <arg name="color_height" value="-1"/> -->
+
+    </include>
+
+
+    <include file="$(find apriltag_ros)/launch/continuous_detection.launch">
+
+        <arg name="camera_name" value="/camera/color" />
+        <arg name="image_topic" value="image_raw" />
+        <arg name="publish_tag_detections_image" value="true" />
+
+    </include>
+
+
+    <node name="rviz" pkg="rviz" type="rviz" respawn="false" args="-d $(find apriltag_test)/rviz/test.rviz" output="screen" required="true"/>
+
+</launch>

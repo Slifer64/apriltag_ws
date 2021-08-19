@@ -1,0 +1,24 @@
+#!/bin/bash
+
+
+CATKIN_MAKE_OPTIONS="-DCMAKE_BUILD_TYPE=Release"
+
+if [ $# -eq 0 ]; then
+  CATKIN_MAKE_OPTIONS=$@
+fi
+
+cd src/
+
+file_name="CMakeLists.txt"
+if [ ! -f $file_name ]; then
+  rm -rf ../build/ ../devel/ ../devel_isolated/ >/dev/null 
+  catkin_init_workspace
+fi
+
+cd ../
+catkin_make_isolated -DCMAKE_BUILD_TYPE=Release
+source devel_isolated/setup.bash
+
+
+
+
