@@ -14,7 +14,7 @@
 
         <arg name="enable_sync" value="false" />
 
-        <arg name="publish_tf" value="true"/>
+        <arg name="publish_tf" value="false"/>
 
         <arg name="enable_pointcloud" value="false" />
 
